@@ -50,7 +50,7 @@ func main() {
 	for {
 		tf := bScan.Scan() // 입력 받는 함수
 		if !tf {
-			fmt.Println("데이터 입력 중 에러 발생! :", err)
+			fmt.Println("데이터 입력 중 에러 발생!")
 			bufio.NewReader(os.Stdin).ReadString('\n')
 		} else {
 			// fmt.Println(str, n)
