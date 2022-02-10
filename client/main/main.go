@@ -49,7 +49,7 @@ func main() {
 	for {
 		tf := bScan.Scan() // 입력 받는 함수
 		if !tf {
-			fmt.Println("데이터 입력 중 에러 발생! :", err)
+			fmt.Println("데이터 입력 중 에러 발생!")
 			bufio.NewReader(os.Stdin).ReadString('\n')
 		} else {
 			str = bScan.Text()               // 입력 받은 값을 string으로 저장

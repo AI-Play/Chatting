@@ -2,25 +2,27 @@ package server
 
 import (
 	"fmt"
-	"io"
 	"net"
 	"sync"
 	"time"
+
+	"github.com/AI-Play/Chatting/server/user_manage"
 )
 
 type Server struct {
 	socket net.Listener
 	// address        net.IPAddr
 	gerneratedTime time.Time
+	users          *user_manage.Users
 }
 
-func NewServer() *Server {
-	return &Server{}
+func NewServer(users *user_manage.Users) *Server {
+	return &Server{users: users}
 }
 
-func (s *Server) ServerStart(wg *sync.WaitGroup) {
+func (s *Server) ServerStart(wg *sync.WaitGroup, network, address string) {
 	defer wg.Done()
-	l, err := net.Listen("tcp", ":8000")
+	l, err := net.Listen(network, address)
 	if err != nil {
 		fmt.Println("Listen 중 에러 발생! :", err)
 	} else {
@@ -39,32 +41,34 @@ func (s *Server) ServerStart(wg *sync.WaitGroup) {
 		} else {
 			// conn 정보를 필드로 갖는 유저 객체를 생성해서
 			// handler에 전달할 예정
-			go handler(conn)
+			newUser := user_manage.NewUser(conn, s.users)
+			s.users.UserList = append(s.users.UserList, newUser)
+			go newUser.UserHandler()
 			fmt.Println("유저 접속: ", conn)
 		}
 	}
 
 }
 
-func handler(conn net.Conn) {
-	recv := make([]byte, 4096)
+// func handler(conn net.Conn) {
+// 	recv := make([]byte, 4096)
 
-	for {
-		n, err := conn.Read(recv)
-		if err != nil {
-			if err == io.EOF {
-				fmt.Println("connection is closed from client : ", conn.RemoteAddr().String())
-			}
-			fmt.Println("Failed to receive data : ", err)
-			break
-		}
+// 	for {
+// 		n, err := conn.Read(recv)
+// 		if err != nil {
+// 			if err == io.EOF {
+// 				fmt.Println("connection is closed from client : ", conn.RemoteAddr().String())
+// 			}
+// 			fmt.Println("Failed to receive data : ", err)
+// 			break
+// 		}
 
-		if n > 0 {
-			fmt.Println(string(recv[:n]))
-			conn.Write(recv[:n])
-		}
-	}
-}
+// 		if n > 0 {
+// 			fmt.Println(string(recv[:n]))
+// 			conn.Write(recv[:n])
+// 		}
+// 	}
+// }
 
 // func getIP() {
 // 	ifaces, err := net.Interfaces()
