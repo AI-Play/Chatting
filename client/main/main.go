@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	conn, err := net.Dial("tcp", "127.0.0.1:8000")
+	conn, err := net.Dial("tcp", "52.79.72.209:5000")
 	if err != nil {
 		fmt.Println("Dial 중 에러 발생! : ", err)
 	}
@@ -39,8 +39,7 @@ func main() {
 				fmt.Println("Failed to Read data : ", err)
 				break
 			}
-
-			fmt.Println("[RESPONSE]", string(recv[:n]))
+			fmt.Println(string(recv[:n]))
 		}
 	}(conn)
 
@@ -53,7 +52,6 @@ func main() {
 			fmt.Println("데이터 입력 중 에러 발생! :", err)
 			bufio.NewReader(os.Stdin).ReadString('\n')
 		} else {
-			// fmt.Println(str, n)
 			str = bScan.Text()               // 입력 받은 값을 string으로 저장
 			ch <- str                        // ch 채널로 string data 전달
 			time.Sleep(1 * time.Millisecond) // 과부하 방지를 위한 1ms 휴식
