@@ -52,11 +52,11 @@ Chatting/
   │     │     └── main.go   : Entry Point Server 객체를 생성하고 GoRoutine을 생성한다.
   │     │     └── manage.go : 명령어 입력 및 실시간 서버 관리 함수
   │     │
-  │     ├── /server
+  │     ├── server/
   │     │     ├── init.go   : 임포트에 필요한 initialize(미구현)
   │     │     └── server.go : 서버 객체, 서버 구동 함수, 유저 객체를 생성 GoRoutine을 생성한다.
   │     │
-  │     └── /user_manage
+  │     └── user_manage/
   │           ├── init.go       : 임포트에 필요한 initialize(미구현)
   │           └── userobject.go : 유저 객체 함수. 유저 커맨드를 받아서 동작하는 함수를 관리한다.
   │
