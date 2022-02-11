@@ -49,17 +49,11 @@ func (u *User) UserHandler() {
 			fmt.Println("Failed to receive data : ", err)
 		}
 		if n > 0 {
-			// 글자가 들어오면 어떤 동작을 수행함.
-			// Mux 함수를 만들어서 커맨드에 따라 동작을 수행하도록 하거나
-			// SendAll을 불러서 수행하면 될듯.
+			// 첫 글자 '/'로 들어오면 명령을 수행함.
 			if recv[0] == byte('/') {
-				//Call commandMux(recv[1])
-				//만약 첫 글자가 /라면 명령어가 들어오는 것이다.
-				//명령어를 commandMux로 넘겨서 함수를 동작시킬 수 있다.
-				u.commandMux(fmt.Sprintln(u.conn.RemoteAddr().String(), ":", string(recv[:n])))
-
+				u.commandMux(recv[:n])
 			} else {
-				str := fmt.Sprintln(u.conn.RemoteAddr().String(), ":", string(recv[:n]))
+				str := fmt.Sprint(u.Name, ": ", string(recv[:n]))
 				fmt.Println(str)
 				u.conn.Write([]byte(str))
 			}
@@ -67,9 +61,10 @@ func (u *User) UserHandler() {
 	}
 }
 func (u *User) Send(msg string) { u.conn.Write([]byte(msg)) }
-func (u *User) commandMux(msg string) []error {
-	switch msg[1] {
-	case 'a':
+func (u *User) commandMux(recv []byte) []error {
+	msg := fmt.Sprint(u.Name, ": ", string(recv[3:]))
+	switch recv[1] {
+	case byte('a'):
 		fmt.Println(msg)
 		errs := u.users.SendAll(msg) // 유저 전체에게 메시지 전송
 		if len(errs) != 0 {
@@ -77,7 +72,7 @@ func (u *User) commandMux(msg string) []error {
 		}
 		return errs
 	default:
-		fmt.Println("올바르지 않은 명령어")
+		fmt.Printf("올바르지 않은 명령어: %v\n", string(recv[:1]))
 		u.Send("명령어가 올바르지 않습니다.")
 		return nil
 	}
@@ -93,7 +88,7 @@ type Users struct {
 }
 
 func (u *Users) SendAll(msg string) []error {
-	bMsg := []byte(msg)
+	bMsg := []byte("[ALL]" + msg)
 	errs := make([]error, 0, 10)
 	for _, v := range u.UserList {
 		n, err := v.conn.Write(bMsg)
