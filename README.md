@@ -48,25 +48,25 @@ Chatting/
   ├── server/
   │     │
   │     ├── main/
-  │     │     ├── init.go   : 서버 시작시 필요한 initialize(미구현)
+  │     │     ├── init.go   : 서버 시작에 필요한 initialize(미구현)
   │     │     └── main.go   : Entry Point Server 객체를 생성하고 GoRoutine을 생성한다.
   │     │     └── manage.go : 명령어 입력 및 실시간 서버 관리 함수
   │     │
   │     ├── /server
-  │     │     ├── init.go   : 임포트 시 필요한 initialize(미구현)
+  │     │     ├── init.go   : 임포트에 필요한 initialize(미구현)
   │     │     └── server.go : 서버 객체, 서버 구동 함수, 유저 객체를 생성 GoRoutine을 생성한다.
   │     │
   │     └── /user_manage
-  │           ├── init.go       : 임포트 시 필요한 initialize(미구현)
+  │           ├── init.go       : 임포트에 필요한 initialize(미구현)
   │           └── userobject.go : 유저 객체 함수. 유저 커맨드를 받아서 동작하는 함수를 관리한다.
   │
   └── client/
         │
         ├── main/
-        │     ├── init.go : 임포트 시 필요한 initialize(미구현)
+        │     ├── init.go : 클라이언트 시작에 필요한 initialize(미구현)
         │     └── main.go : 서버 연결 고루틴 실행 및 명령어 입력 관리
         │     
         └── client/
-              ├── init.go   : 임포트 시 필요한 initialize(미구현)
+              ├── init.go   : 임포트에 필요한 initialize(미구현)
               └── client.go : 클라이언트 함수 및 객체 관리(미구현)
 ```
