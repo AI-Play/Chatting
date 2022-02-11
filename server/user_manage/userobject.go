@@ -10,23 +10,26 @@ import (
 var id int = 0
 
 type User struct {
-	conn           net.Conn
-	gerneratedTime time.Time
-	Id             int
-	Name           string
-	users          *Users
+	conn           net.Conn  // 클라이언트 연결 인터페이스
+	gerneratedTime time.Time // 유저 객체가 생성된 시간
+	Id             int       // db에서 PK 읽기
+	Name           string    // db에서 Name 읽기
+	users          *Users    // User 객체를 포함하는 유저리스트
 }
 
+// 유저 객체 생성자
 func NewUser(conn net.Conn, users *Users) *User {
 	newUser := &User{conn: conn, gerneratedTime: time.Now(), Id: id, users: users}
 	id++
 	return newUser
 }
+
+// 유저 객체 String 메소드. python의 __str__ 메소드 와 같다.
 func (u User) String() string {
 	return fmt.Sprintf("%d: %s (생성일: %v)", u.Id, u.Name, u.gerneratedTime)
 }
 
-// 유저 고루틴을 도는 함수
+// 유저 고루틴을 도는 메소드
 func (u *User) UserHandler() {
 	recv := make([]byte, 4096)
 	for {
@@ -34,7 +37,13 @@ func (u *User) UserHandler() {
 		if err != nil {
 			if err == io.EOF {
 				fmt.Println("connection is closed from client : ", u.conn.RemoteAddr().String())
-				// 유저 객체 정보 db에 저장 후 삭제를 수행할 공간 //
+				// 유저 객체 정보 db에 저장 후 삭제를 수행할 공간
+				u.conn.Close()                       // 연결을 끊고
+				for i, v := range u.users.UserList { // 객체를 삭제한다
+					if v == u {
+						fmt.Println(i, v, u)
+					}
+				}
 				break
 			}
 			fmt.Println("Failed to receive data : ", err)
