@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	conn, err := net.Dial("tcp", "52.79.72.209:5000")
+	conn, err := net.Dial("tcp", "127.0.0.1:5000")
 	if err != nil {
 		fmt.Println("Dial 중 에러 발생! : ", err)
 	}

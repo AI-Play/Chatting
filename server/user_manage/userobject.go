@@ -34,8 +34,14 @@ func (u *User) UserHandler() {
 	recv := make([]byte, 4096)
 	for {
 		n, err := u.conn.Read(recv)
+		fmt.Println("Debugging n")
+		fmt.Println(n)
+		fmt.Println(err)
 		if err != nil {
+			fmt.Println("err")
+			fmt.Println(err)
 			if err == io.EOF {
+				fmt.Println("err EOF")
 				fmt.Println("connection is closed from client : ", u.conn.RemoteAddr().String())
 				// 유저 객체 정보 db에 저장 후 삭제를 수행할 공간
 				u.conn.Close()                       // 연결을 끊고
@@ -49,13 +55,16 @@ func (u *User) UserHandler() {
 			fmt.Println("Failed to receive data : ", err)
 		}
 		if n > 0 {
+			fmt.Println("Debugging n > 0")
 			// 첫 글자 '/'로 들어오면 명령을 수행함.
 			if recv[0] == byte('/') {
+				fmt.Println("Debugging / if")
 				u.commandMux(recv[:n])
 			} else {
+				fmt.Println("Debugging / else")
 				str := fmt.Sprint(u.Name, ": ", string(recv[:n]))
 				fmt.Println(str)
-				u.conn.Write([]byte(str))
+				// u.conn.Write([]byte(str))
 			}
 		}
 	}
