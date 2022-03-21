@@ -1,4 +1,4 @@
-module github.com/AI-Play/Chatting
+module github.com/seahahn/Chatting
 
 go 1.17
 
