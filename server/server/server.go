@@ -38,9 +38,12 @@ func (s *Server) ServerStart(network, address string) {
 		} else {
 			// conn 정보를 필드로 갖는 유저 객체를 생성해서
 			// UserHandler 함수로 고루틴 실행
+			fmt.Println("[SERVER] 클라이언트 연결 성공!")
+			fmt.Println(conn)
 			newUser := user_manage.NewUser(conn, s.users)        // 유저 객체 생성
 			s.users.UserList = append(s.users.UserList, newUser) // 전체 유저 리스트에 유저 객체 추가
 			go newUser.UserHandler()                             // UserHandler 함수 GoRoutine 실행
+			fmt.Println(s.users.UserList)
 			fmt.Println("유저 접속: ", conn)
 		}
 	}
