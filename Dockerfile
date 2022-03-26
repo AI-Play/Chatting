@@ -14,4 +14,4 @@ EXPOSE 5000
 
 RUN go build main.go
 
-CMD ["/app/brandnew/main.exe"]
+CMD ["main.exe"]
