@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/seahahn/Chatting/brandnew/websocket"
+	"github.com/AI-Play/Chatting/brandnew/websocket"
 )
 
 func serveWs(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
@@ -34,7 +34,7 @@ func setupRoutes() {
 }
 
 func main() {
-    fmt.Println("Distributed Chat App v0.01")
+    fmt.Println("AI-Play Public Chat App v0.1")
     setupRoutes()
     http.ListenAndServe(":5000", nil)
 }
