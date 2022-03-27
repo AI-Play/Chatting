@@ -14,4 +14,4 @@ EXPOSE 5000
 
 RUN go build main.go
 
-CMD ["main.exe"]
+CMD ["./main"]
