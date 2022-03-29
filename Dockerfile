@@ -10,8 +10,8 @@ RUN go mod download
 
 WORKDIR /app/brandnew
 
-EXPOSE 5000
-
 RUN go build main.go
 
-CMD ["./main"]
+EXPOSE 5000
+
+CMD ["nohup", "./main", "&"]

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/AI-Play/Chatting/brandnew/websocket"
 )
@@ -28,7 +29,7 @@ func setupRoutes() {
     pool := websocket.NewPool()
     go pool.Start()
 
-    http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+    http.HandleFunc("/wss", func(w http.ResponseWriter, r *http.Request) {
         serveWs(pool, w, r)
     })
 }
@@ -36,5 +37,6 @@ func setupRoutes() {
 func main() {
     fmt.Println("AI-Play Public Chat App v0.1")
     setupRoutes()
-    http.ListenAndServe(":5000", nil)
+    port := fmt.Sprintf(":%s", os.Getenv("PORT"))
+    http.ListenAndServe(port, nil)
 }
