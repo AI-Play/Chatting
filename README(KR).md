@@ -4,31 +4,31 @@
 
 - Golang
 
-## Running the Development Server
+## 개발 서버 작동 방법
 
 ```
 cd brandnew
-go run main.go // Auto-reload disabled
-// Or
-air // Auto-reload enabled
+go run main.go // Auto-reload X
+// 또는
+air // Auto-reload O
 ```
 
-For Air reference : https://github.com/cosmtrek/air
+Air 관련 참고 : https://github.com/cosmtrek/air
 
-## Directory Structure
+## 디렉토리 구조도
 
 ```
 Chatting
   |-- Dockerfile
   |-- README.md
-  |-- brandnew // Directory for the currently deployed chat server
+  |-- brandnew // 현재 배포 중인 채팅 서버의 디렉토리
   |   |-- main.go
   |   `-- websocket
   |       |-- client.go
   |       |-- init.go
   |       |-- pool.go
   |       `-- websocket.go
-  |-- client // Client part of the previous chat server
+  |-- client // 이전 채팅 서버의 클라이언트 부분
   |   |-- client
   |   |   |-- client.go
   |   |   `-- init.go
@@ -37,7 +37,7 @@ Chatting
   |       `-- main.go
   |-- go.mod
   |-- go.sum
-  `-- server // Server part of the previous chat server
+  `-- server // 이전 채팅 서버의 서버 부분
       |-- main
       |   |-- init.go
       |   |-- main.go
